@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head> 
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width-device-width"/>
+        <title>Controle de Agenda</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
+        
+        <style type="text/css">
+            body {
+                background-color: #8AD0FD;
+            } 
+            #pag{
+                width: 1024px;
+                margin-top: 10px;
+                margin:0 auto;
+            }
+            #logo{
+                width: 200px;
+                height: 180px;
+                float: left;
+            }
+            #banner {
+                color: white;
+                width: 824px;
+                height: 180px;
+                float: left; 
+                background-color: #001664;
+            }
+            #conteudo{
+                color: white;
+                width: 1024px;
+                height: 800px;
+                float: left;
+                background-color: #06567A;
+            }
+            #rodape{
+                color: white;
+                width: 1024px;
+                height: 50px;
+                float: left;
+                background-color: #001664;
+        </style>
+        
+        
+    </head>
+   
+    
+    <body>
+        
+        <div id="pag">
+            <div id="logo">
+               <img src="https://png.pngtree.com/element_our/20190601/ourlarge/pngtree-health-symbol-free-png-picture-image_1344400.jpg" width="200px" height="180px">
+            </div>
+            
+            <div id="banner" style="text-align:center;"> <h1>Bem Vindo ao Java Hospital Center</h1> </div>
+        
+            <div id="conteudo">
+            
+        <div class="container" style="margin-top: 50px; margin-bottom: 20px">
+            <h2 class="alert alert-dark"><center> Controle de Consultas </center> </h2> 
+            <p class="text-right"><a href="/novaAgenda" class="btn btn-primary"> Marcar Horario </a></p>
+        </div> 
+        
+                <div class="container">
+            <table id="TabelaProdutos" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Data da consulta</th>
+                        <th>Medico</th>
+                        <th>Convenio</th>
+                        <th>Consulta</th>
+                        <th>OBS</th>
+                        <th>Alterar</th>
+                        <th>Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${listaAgenda}">
+                        <td th:text="${p.idPaciente}"></td>
+                        <td th:text="${p.nomePaciente}"></td>
+                        <td th:text="${p.hora}"></td>
+                        <td th:text="${p.nomeMedico}"></td>
+                        <td th:text="${p.convenio}"></td>
+                        <td th:text="${p.consulta}"></td>
+                        <td th:text="${p.obs}"></td>
+                        
+                        <td><a th:href="@{/editarAgenda/{id}(id=${p.idPaciente})}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+                        <td><a th:href="@{/excluirAgenda/{id}(id=${p.idPaciente})}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>        
+        
+        <div id="rodape">
+                <center> Desenvolvido por: Desenvolvido por: Vincius Maravalhas, Lucas Mansur, Pedro Henrique dos Santos Faria da Silva ,Jonathas Aragão e Gustavo Lopes </center>
+        </div>
+            
+        </div>
+        <script>
+            $(document).ready( function () {
+                $('#TabelaAgenda').DataTable({
+                    "language": {
+                        "sProcessing":    "Procesando...",
+                        "sLengthMenu":    "Exibir _MENU_ registros por página",
+                        "sZeroRecords":   "Nenhum resultado encontrado",
+                        "sEmptyTable":    "Nenhum resultado encontrado",
+                        "sInfo":          "Exibindo do _START_ até _END_ de um total de _TOTAL_ registros",
+                        "sInfoEmpty":     "Exibindo do 0 até 0 de um total de 0 registros",
+                        "sInfoFiltered":  "(Filtrado de um total de _MAX_ registros)",
+                        "sInfoPostFix":   "",
+                        "sSearch":        "Buscar:",
+                        "sUrl":           "",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "Carregando...",
+                        "oPaginate": {
+                            "sFirst":    "Primeiro",
+                            "sLast":    "Último",
+                            "sNext":    "Próximo",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": Ativar para ordenar a coluna de maneira ascendente",
+                            "sSortDescending": ": Ativar para ordenar a coluna de maneira descendente"
+                        }
+                    }
+                });
+            } );
+        </script>
+    </body>
+</html>
+
